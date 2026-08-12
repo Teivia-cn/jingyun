@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>塔维云统一管理 API 文档</title>
+  <style>
+    :root{color-scheme:light;--bg:#f5f5f7;--surface:#fff;--ink:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--blue:#06c;--code:#1d1d1f;--code-bg:#f0f0f2;--green:#18794e;--orange:#9a5b00;--red:#b42318;}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif}
+    .layout{display:grid;grid-template-columns:270px minmax(0,920px);gap:36px;max-width:1280px;margin:0 auto;padding:34px 28px 80px}.sidebar{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto}.brand{font-size:18px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}.version{color:var(--muted);font-size:12px;margin-bottom:24px}.nav-title{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:22px 0 6px}.nav a{display:block;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:7px}.nav a:hover{background:#e8e8ed;color:var(--ink)}main{min-width:0}.hero{padding:10px 0 28px;border-bottom:1px solid var(--line);margin-bottom:28px}.eyebrow{color:var(--blue);font-weight:600;font-size:13px}.hero h1{font-size:38px;line-height:1.15;letter-spacing:-.04em;margin:8px 0 12px}.hero p{color:var(--muted);font-size:17px;max-width:720px;margin:0}.notice{background:#eaf3ff;border:1px solid #b8d8ff;border-radius:10px;padding:14px 16px;margin:20px 0}.section{scroll-margin-top:24px;margin:42px 0}.section h2{font-size:26px;line-height:1.25;letter-spacing:-.03em;margin:0 0 8px}.section h3{font-size:19px;margin:26px 0 5px}.section>p,.section>ul{max-width:820px}.muted{color:var(--muted)}code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code-bg);padding:2px 5px;border-radius:4px;color:var(--code)}pre{background:var(--code);color:#f5f5f7;border-radius:10px;padding:16px 18px;overflow:auto;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}table{border-collapse:collapse;width:100%;margin:12px 0 20px;background:var(--surface);border:1px solid var(--line);border-radius:9px;overflow:hidden;display:table}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:13px;background:#f8f8fa}tr:last-child td{border-bottom:0}.endpoint{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden}.endpoint-head{display:flex;align-items:center;gap:10px;padding:12px 15px;border-bottom:1px solid var(--line)}.method{font:700 11px ui-monospace,monospace;padding:3px 7px;border-radius:5px;background:#e8f5ed;color:var(--green)}.method.post{background:#fff3df;color:var(--orange)}.method.delete{background:#feeceb;color:var(--red)}.path{font:600 14px ui-monospace,monospace;overflow-wrap:anywhere}.scope{margin-left:auto;color:var(--muted);font-size:12px}.endpoint-body{padding:12px 15px}.endpoint-body p{margin:3px 0 10px}.tag{display:inline-block;color:var(--muted);font-size:12px;margin:0 6px 4px 0}.footer{border-top:1px solid var(--line);margin-top:60px;padding-top:18px;color:var(--muted);font-size:13px}@media(max-width:850px){.layout{display:block;padding:20px 16px 60px}.sidebar{position:static;max-height:none;margin-bottom:24px}.nav{display:flex;gap:4px;overflow:auto;padding-bottom:5px}.nav-title{display:none}.nav a{white-space:nowrap}.hero h1{font-size:31px}.scope{display:none}table{font-size:13px;display:block;overflow-x:auto;white-space:nowrap}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">塔维云资源管理系统</div><div class="version">统一管理 API · v1</div>
+      <nav class="nav" aria-label="文档目录">
+        <div class="nav-title">开始使用</div><a href="#overview">概览</a><a href="#auth">认证与权限</a><a href="#format">响应格式</a><a href="#pagination">分页与筛选</a>
+        <div class="nav-title">接口</div><a href="#accounts">服务商账号</a><a href="#resources">资源目录</a><a href="#actions">资源操作</a><a href="#sync">同步任务</a><a href="#errors">错误码</a>
+      </nav>
+    </aside>
+    <main>
+      <header class="hero" id="overview"><div class="eyebrow">DEVELOPER DOCUMENTATION</div><h1>统一管理 API</h1><p>用一套稳定、可审计的 HTTP API 管理阿里云、腾讯云、Cloudflare、魔方财务等服务商资源。服务商密钥始终保存在塔维云服务端，不会通过本 API 返回。</p><div class="notice"><strong>示例地址</strong><br><code>https://console.example.com/api/v1</code><br>请将示例域名和 API 密钥替换为你的实际配置。</div></header>
+
+      <section class="section" id="auth"><h2>认证与权限</h2><p>在请求头中携带 API 密钥。密钥只在创建时显示一次，撤销后立即失效。</p><pre>Authorization: Bearer tvr_replace_with_your_key
+Accept: application/json
+Content-Type: application/json</pre><table><thead><tr><th>Scope</th><th>允许访问</th></tr></thead><tbody><tr><td><code>accounts.read</code></td><td>读取已接入的服务商账号（不含凭据）</td></tr><tr><td><code>resources.read</code></td><td>读取资源、详情和当前可用操作目录</td></tr><tr><td><code>resources.manage</code></td><td>执行操作目录中的资源操作</td></tr><tr><td><code>sync.read</code></td><td>读取同步任务和状态</td></tr><tr><td><code>sync.manage</code></td><td>为指定账号创建同步任务</td></tr></tbody></table><p class="muted">建议为每个自动化程序创建最小权限密钥。不要把密钥放入浏览器代码、前端仓库或日志。</p></section>
+
+      <section class="section" id="format"><h2>响应格式</h2><p>成功响应统一使用 <code>code: 0</code>。列表数据位于 <code>data.items</code>，详情数据位于 <code>data</code>。</p><pre>{
+  "code": 0,
+  "message": "ok",
+  "data": { "items": [], "pagination": { "page": 1, "per_page": 20, "total": 0, "last_page": 1 } }
+}</pre><p>失败时 HTTP 状态码与 <code>code</code> 一致，并可能返回字段级 <code>errors</code>：</p><pre>{ "code": 422, "message": "Validation failed.", "errors": { "operation": "Unsupported operation." } }</pre></section>
+
+      <section class="section" id="pagination"><h2>分页与筛选</h2><p>列表接口支持 <code>page</code>（从 1 开始）和 <code>per_page</code>（1 至 100，默认 20）。资源列表还支持以下筛选：</p><table><thead><tr><th>参数</th><th>说明</th><th>示例</th></tr></thead><tbody><tr><td><code>provider_slug</code></td><td>服务商标识</td><td><code>cloudflare</code></td></tr><tr><td><code>cloud_account_id</code></td><td>账号 ID</td><td><code>12</code></td></tr><tr><td><code>resource_type</code></td><td>资源类型</td><td><code>instance</code></td></tr><tr><td><code>status</code></td><td>资源状态</td><td><code>active</code></td></tr><tr><td><code>region</code></td><td>区域</td><td><code>ap-shanghai</code></td></tr></tbody></table></section>
+
+      <section class="section" id="accounts"><h2>服务商账号</h2><div class="endpoint"><div class="endpoint-head"><span class="method">GET</span><span class="path">/accounts</span><span class="scope">accounts.read</span></div><div class="endpoint-body"><p>读取账号列表。返回账号名称、服务商、区域、同步状态和时间，不返回 Access Key、Token 或密码。</p><pre>curl -sS 'https://console.example.com/api/v1/accounts?page=1&per_page=20' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key'</pre></div></div><div class="endpoint"><div class="endpoint-head"><span class="method post">POST</span><span class="path">/accounts/{accountId}/sync</span><span class="scope">sync.manage</span></div><div class="endpoint-body"><p>创建异步同步任务。重复请求不会并发创建同一账号的重复任务。</p><pre>curl -sS -X POST 'https://console.example.com/api/v1/accounts/12/sync' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key' \
+  -H 'Content-Type: application/json' --data '{}'</pre><p>成功返回 <code>202</code> 和 <code>data.sync_job_id</code>。</p></div></div></section>
+
+      <section class="section" id="resources"><h2>资源目录</h2><div class="endpoint"><div class="endpoint-head"><span class="method">GET</span><span class="path">/resources</span><span class="scope">resources.read</span></div><div class="endpoint-body"><p>读取标准化资源目录。每项包含系统内部 <code>id</code>、服务商侧 <code>external_id</code>、资源名称、类型、区域和状态。</p><pre>curl -sS 'https://console.example.com/api/v1/resources?provider_slug=tencent-cloud' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key'</pre></div></div><div class="endpoint"><div class="endpoint-head"><span class="method">GET</span><span class="path">/resources/{resourceId}</span><span class="scope">resources.read</span></div><div class="endpoint-body"><p>读取单个资源及经过处理的摘要字段。可能包含 IP、操作系统、规格、到期时间和服务商提供的 CPU/内存/磁盘指标；密码永远不会返回。</p></div></div></section>
+
+      <section class="section" id="actions"><h2>资源操作</h2><div class="endpoint"><div class="endpoint-head"><span class="method">GET</span><span class="path">/resources/{resourceId}/actions</span><span class="scope">resources.read</span></div><div class="endpoint-body"><p>获取该资源当前真实可用的操作目录。每个操作包含 <code>id</code>、显示名称、是否危险、输入字段和只读标记。不要自行猜测服务商能力；魔方财务和 IDCsmart V10 会先读取产品控制面板。</p><pre>curl -sS 'https://console.example.com/api/v1/resources/42/actions' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key'</pre><p>下拉字段必须使用接口返回的 <code>options[].value</code>。例如重装系统的 <code>os_id</code> 必须使用服务商返回的操作系统 ID。</p></div></div><div class="endpoint"><div class="endpoint-head"><span class="method post">POST</span><span class="path">/resources/{resourceId}/actions</span><span class="scope">resources.manage</span></div><div class="endpoint-body"><p>执行操作目录中的一个操作。危险操作必须把资源完整名称放入 <code>confirmation</code>。密码等一次性字段只用于本次请求，不会写入审计日志。</p><pre>curl -sS -X POST 'https://console.example.com/api/v1/resources/42/actions' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key' \
+  -H 'Content-Type: application/json' \
+  --data '{"operation":"start","parameters":{}}'</pre><h3>重装系统示例</h3><pre>{
+  "operation": "reinstall",
+  "parameters": { "os_id": "provider-returned-os-id", "password": "one-time-new-password", "part_type": 0 },
+  "confirmation": "资源完整名称"
+}</pre><h3>Cloudflare DNS 示例</h3><pre>{
+  "operation": "create_dns_record",
+  "parameters": { "type": "A", "name": "app.example.com", "content": "203.0.113.10", "ttl": 300, "proxied": true }
+}</pre><p>服务商成功响应会返回经过处理的摘要；异步变更通常附带 <code>sync_job_id</code>。VNC/KVM 等控制台操作只会返回安全的 HTTP(S) 地址。</p></div></div></section>
+
+      <section class="section" id="sync"><h2>同步任务</h2><div class="endpoint"><div class="endpoint-head"><span class="method">GET</span><span class="path">/sync-jobs</span><span class="scope">sync.read</span></div><div class="endpoint-body"><p>查询同步任务，支持 <code>status=queued|running|succeeded|failed</code>。</p><pre>curl -sS 'https://console.example.com/api/v1/sync-jobs?status=failed&page=1' \
+  -H 'Authorization: Bearer tvr_replace_with_your_key'</pre></div></div></section>
+
+      <section class="section" id="errors"><h2>错误码与重试</h2><table><thead><tr><th>HTTP</th><th>含义</th><th>处理建议</th></tr></thead><tbody><tr><td>400</td><td>请求格式错误</td><td>检查 JSON 和 Content-Type</td></tr><tr><td>401</td><td>密钥缺失、无效或已撤销</td><td>重新创建 API 密钥</td></tr><tr><td>403</td><td>缺少所需 Scope 或服务商权限</td><td>调整 API 密钥或上游 Token 权限</td></tr><tr><td>409</td><td>危险操作确认不匹配或状态冲突</td><td>使用资源完整名称并重新读取资源状态</td></tr><tr><td>422</td><td>参数或操作不合法</td><td>以当前操作目录的字段和 options 为准</td></tr><tr><td>429</td><td>请求过于频繁</td><td>按指数退避重试</td></tr><tr><td>502/503</td><td>上游服务商或同步服务暂时不可用</td><td>只读请求可稍后重试，写操作不要盲目重复提交</td></tr></tbody></table><p>建议对 <code>429</code>、<code>502</code>、<code>503</code> 使用 1、2、4、8 秒退避；危险操作收到超时后先查询资源状态和同步任务，不要直接重复执行。</p></section>
+
+      <footer class="footer">文档版本 v1 · 接口能力以资源操作目录实时返回为准 · <a href="/" style="color:var(--blue)">返回管理系统</a></footer>
+    </main>
+  </div>
+</body>
+</html>

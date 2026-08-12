@@ -1,0 +1,17 @@
+*.log
+.env
+.env.*
+!.env.example
+composer.phar
+.DS_Store
+Thumbs.db
+/.idea
+/.vscode
+/vendor
+/runtime/*
+!/runtime/.gitignore
+/.settings
+/.buildpath
+/.project
+/phpunit.xml
+/phpunit.xml.dist
