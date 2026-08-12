@@ -44,7 +44,7 @@
 ### 1. 获取代码和依赖
 
 ```text
-下载源码上传至服务器。
+https://github.com/Teivia-cn/jingyun.git
 ```
 
 将 Web 根目录设置为项目中的 `public/` 目录，并配置 ThinkPHP 伪静态规则。Apache 可使用 [public/.htaccess](public/.htaccess)；Nginx 或宝塔请将不存在的文件和目录转发给 `index.php`。
